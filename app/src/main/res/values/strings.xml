@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BookAndQuote</string>
+    <string name="app_title">Books And Quotes</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="button_quote">Quotes</string>
+    <string name="button_book">Books</string>
+
+</resources>
