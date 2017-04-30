@@ -1,11 +1,13 @@
 package com.example.bookandquote;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.content.ContentValues;
@@ -30,6 +32,9 @@ import java.util.Random;
 
 public class HomePageActivity extends Activity{
     private QuotesDataSource dataSource;
+    Button homePageButton;
+    Button bookButton;
+    Button quoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -44,8 +49,25 @@ public class HomePageActivity extends Activity{
         ArrayAdapter<Quote> adapter = new ArrayAdapter<Quote>(this, android.R.layout.simple_list_item_1, values);
         getListView().setAdapter(adapter);
         //setListAdapter(adapter);
+        bookButton = (Button) findViewById(R.id.nav_button_book);
+        bookButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent in = new Intent(HomePageActivity.this, BookHomePage.class );
+                startActivity(in);
+            }
+        });
+
+        quoteButton = (Button) findViewById(R.id.nav_button_quote);
+        quoteButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(HomePageActivity.this, QuoteHomePage.class);
+            }
+        });
     }
 
+    /**
     public void onClickAddQuote(View view){
         ContentValues values = new ContentValues();
         values.put(QuoteProvider.QUOTE, ((EditText)findViewById(R.id.quoteText)).getText().toString());
@@ -68,19 +90,22 @@ public class HomePageActivity extends Activity{
             }while(c.moveToNext());
         }
     }
-
+    **/
     public void onClick(View view){
         ArrayAdapter<Quote> adapter = (ArrayAdapter<Quote>) getListView().getAdapter();
         Quote quote = null;
         switch (view.getId()){
             case R.id.addQuoteButton:
                 String[] quotes = new String[]{
-                        "No Regret", "Live to the Fullest", "Fairy Tale"};
+                        "No Regret", "Live to the Fullest", "Enjoy the smallest things"};
 
-                int nextInt = new Random().nextInt(3);
+                //int nextInt = new Random().nextInt(3);
+                int arrayLength = quotes.length;
+                for(int i = 0; i < arrayLength; i++){
+                    quote = dataSource.createQuote(quotes[i]);
+                    adapter.add(quote);
+                }
 
-                quote = dataSource.createQuote(quotes[nextInt]);
-                adapter.add(quote);
                 break;
             case R.id.deleteQuoteButton:
                 if(getListView().getAdapter().getCount() > 0){

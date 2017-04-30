@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-        public static final String TABLE_QUOTES = "quotes";
+    public static final String TABLE_QUOTES = "quotes";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_QUOTE = "quote";
 
